@@ -1,23 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // Select all div elements inside the board
     const squares = document.querySelectorAll("#board div");
-    const gameState = Array(9).fill(null); // Track the state of the game
-    let currentPlayer = 'X'; // Start with player X
+    let currentPlayer = "X";  // To track the current player (X or O)
 
-    squares.forEach((square, index) => {
+    // Iterate over each square
+    squares.forEach(square => {
+        // Exercise 1: Add the 'square' class to each div inside the board
         square.classList.add("square");
 
-        // Add click event listener to each square
+        // Exercise 2: Add X or O when a square is clicked
         square.addEventListener("click", function() {
-            // Check if the square is already filled
-            if (gameState[index] !== null) return; 
+            if (!square.innerHTML) {  // Ensure the square is empty before allowing changes
+                square.innerHTML = currentPlayer;  // Set current player's mark (X or O)
+                square.classList.add(currentPlayer);  // Add the class for styling (X or O)
+                currentPlayer = (currentPlayer === "X") ? "O" : "X";  // Switch turns
+            }
+        });
 
-            // Update the square's content and class
-            square.textContent = currentPlayer;
-            square.classList.add(currentPlayer); // Add class "X" or "O"
-            gameState[index] = currentPlayer; // Update game state
+        // Exercise 3: Add event listener for mouse hover (mouseover)
+        square.addEventListener("mouseover", function() {
+            square.classList.add("hover");  // Add hover effect when mouse is over the square
+        });
 
-            // Toggle the current player
-            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        // Remove hover effect when the mouse leaves the square
+        square.addEventListener("mouseout", function() {
+            square.classList.remove("hover");  // Remove hover effect when the mouse leaves
         });
     });
 });
